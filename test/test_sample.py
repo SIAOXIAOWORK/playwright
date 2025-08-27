@@ -57,3 +57,14 @@ def test_add_todo(browser_page):
     assert items.nth(0).locator("button[class=destroy]").is_visible()
     items.nth(0).locator("button[class=destroy]").click()
     assert items.count() == 0
+
+
+def test_fail_case(browser_page):
+    browser_page.goto("https://www.bing.com/")
+    title = browser_page.title()
+    try:
+        assert "123456" in title
+    except AssertionError:
+        browser_page.screenshot(path="test_fail_case(fail).png")
+        print("Assert failed.")
+        raise
